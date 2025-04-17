@@ -1,0 +1,14 @@
+{
+  "name": "backendstart",
+  "version": "1.0.0",
+  "description": "a starting of backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "chai"
+  ],
+  "author": "sushant jha",
+  "license": "ISC"
+}
