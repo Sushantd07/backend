@@ -1,4 +1,6 @@
 import mongoose from 'mongoose'
+import bcrypt from 'bcrypt'; 
+import jwt from 'jsonwebtoken';
 
 // 1. We are going with Sessions as well as Security    
 
@@ -6,7 +8,7 @@ const userSchema = new mongoose.Schema(
     {
         username: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
             lowercase: true,
             trim: true,
@@ -14,35 +16,35 @@ const userSchema = new mongoose.Schema(
         },
         email: {
             type: String,
-            require: true,
+            required: true,
             unique: true,
             lowercase: true,
             trim: true,
         },
         fullname: {
             type: String,
-            require: true,
+            required: true, 
             trim: true,
             index: true
         },
         avatar: {
             type: String,
-            require: true,
+            required: true,
         },
         coverImage: {
             type: String
         },
-        watchHistory: [
-            {
-                type: Schema.Type.ObjectId,
-                ref: "Video"
-            }
-        ],
+        // watchHistory: [
+        //     // {
+        //     //     type: Schema.Types.ObjectId,
+        //     //     ref: "Video"
+        //     // }
+        // ],
         password: {
             type: String,
             required: [true, "Password is Required"]
         },
-        refreshTokens: {
+        refreshToken: {
             type: String
         }
 
@@ -57,7 +59,7 @@ userSchema.pre("save", async function (next) {  // dont use arrow fnc bcz it use
 })
 
 userSchema.methods.isPasswordCorrect = async function (password) {
-    return await bcrypt.comapre(password, this.password)
+    return await bcrypt.compare(password, this.password)
 }
 
 userSchema.methods.generateAccessToken = function () {
@@ -91,4 +93,4 @@ userSchema.methods.generateRefreshToken = function () {
 }
 
 
-export const User = mongoose.module("User", userSchema) 
+export const User = mongoose.model("User", userSchema) 
